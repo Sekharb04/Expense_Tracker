@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in | Personal Expense Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth-page">
+    <main class="auth-panel">
+        <div class="auth-brand">
+            <div class="logo-icon"><i class="fa-solid fa-wallet"></i></div>
+            <h1>ExpenseTracker</h1>
+        </div>
+
+        <div class="auth-heading">
+            <h2>{{ 'Welcome back' if active_form == 'login' else 'Create your account' }}</h2>
+            <p>{{ 'Sign in to continue to your expenses.' if active_form == 'login' else 'Your expense data will be private to your account.' }}</p>
+        </div>
+
+        <nav class="auth-switch" aria-label="Account access">
+            <a class="{{ 'active' if active_form == 'login' else '' }}" href="{{ url_for('login', mode='login') }}">Log in</a>
+            <a class="{{ 'active' if active_form == 'register' else '' }}" href="{{ url_for('login', mode='register') }}">Create account</a>
+        </nav>
+
+        {% if error %}
+        <div class="auth-error" role="alert">{{ error }}</div>
+        {% endif %}
+
+        {% if active_form == 'login' %}
+        <form class="auth-form" action="{{ url_for('login') }}" method="post">
+            <div class="form-group">
+                <label class="form-label" for="login-email">Email</label>
+                <input class="form-input" id="login-email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="login-password">Password</label>
+                <div class="password-input-wrap">
+                    <input class="form-input" id="login-password" name="password" type="password" autocomplete="current-password" required>
+                    <button class="password-visibility" type="button" aria-label="Show password" aria-controls="login-password" aria-pressed="false">
+                        <i class="fa-regular fa-eye" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="btn btn-primary auth-submit" type="submit">Log in <i class="fa-solid fa-arrow-right"></i></button>
+        </form>
+        {% else %}
+        <form class="auth-form" action="{{ url_for('register') }}" method="post">
+            <div class="form-group">
+                <label class="form-label" for="register-username">Username</label>
+                <input class="form-input" id="register-username" name="username" type="text" maxlength="80" autocomplete="username" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="register-email">Email</label>
+                <input class="form-input" id="register-email" name="email" type="email" maxlength="254" autocomplete="email" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="register-password">Password</label>
+                <div class="password-input-wrap">
+                    <input class="form-input" id="register-password" name="password" type="password" minlength="8" autocomplete="new-password" required>
+                    <button class="password-visibility" type="button" aria-label="Show password" aria-controls="register-password" aria-pressed="false">
+                        <i class="fa-regular fa-eye" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="btn btn-primary auth-submit" type="submit">Create account <i class="fa-solid fa-arrow-right"></i></button>
+        </form>
+        {% endif %}
+    </main>
+    <script>
+        document.querySelectorAll('.password-visibility').forEach((button) => {
+            button.addEventListener('click', () => {
+                const passwordInput = document.getElementById(button.getAttribute('aria-controls'));
+                const isVisible = passwordInput.type === 'password';
+                passwordInput.type = isVisible ? 'text' : 'password';
+                button.setAttribute('aria-label', isVisible ? 'Hide password' : 'Show password');
+                button.setAttribute('aria-pressed', String(isVisible));
+                button.innerHTML = `<i class="fa-regular ${isVisible ? 'fa-eye-slash' : 'fa-eye'}" aria-hidden="true"></i>`;
+            });
+        });
+    </script>
+</body>
+</html>
