@@ -1,12 +1,6 @@
-## Title
-
-**Personal Expense Tracker: Secure, Account-Based Expense Recording and Budget Analysis**
+## Personal Expense Tracker: Secure, Account-Based Expense Recording and Budget Analysis
 
 This title describes the application's central purpose: helping individuals record spending, organize transactions, and compare expenses with category budgets. The word "personal" reflects that users sign in to their own accounts and their expenses are scoped to their account. "Analysis" represents the dashboard charts and summaries. The project is a small web application designed for practical, everyday expense management rather than institutional accounting.
-
-## Scope
-
-The application provides account registration, email-and-password login, logout, and an authenticated dashboard. Users can add, edit, delete, filter, search, and export expense records. They can set monthly budgets for predefined spending categories and review totals, averages, daily trends, category breakdowns, and budget comparisons. The interface presents money in Indian rupees and includes category-specific subcategory suggestions with emoji labels. It is scoped as a local Flask application backed by SQLite, not a hosted financial service.
 
 ## Problem Statement
 
@@ -51,21 +45,31 @@ Here is the tech stack formatted cleanly as bullet points:
 - **Font Awesome** – UI icons and category indicators
 - **Google Fonts** – Typography styling loaded via CDN
 
-## Data
-
-The user table stores a unique username, a unique email address, a password hash, and a creation timestamp. Expense records include a user identifier, title, numeric amount, category, optional subcategory, date, optional notes, and a creation timestamp. Budget records associate a user and category with a monthly limit. Category names, icons, colors, and the available emoji-labelled subcategories are defined in application code rather than stored as user-generated database records. Amounts are displayed and exported as Indian rupees.
-
-## Data Control
-
-Passwords are hashed before they are stored, and login checks submitted passwords against those hashes. Registration applies basic validation to username length, email shape, and minimum password length; expense and budget routes validate required fields and numeric limits. API routes require a logged-in session, while database queries include the current user's identifier when reading or changing expenses and budgets. SQL values are passed as parameters. Session cookies are configured as HttpOnly and SameSite Lax. Deployments should provide a persistent secret key through the `SECRET_KEY` environment variable.
-
-## Data Flow
-
-The browser loads the dashboard template and its JavaScript after the user signs in. JavaScript requests category metadata, expense records, and analytics from Flask API endpoints. Flask obtains the signed-in user's identifier from the session and passes it into database functions. SQLite returns that user's matching rows, and Flask serializes the results as JSON. The browser formats amounts, updates summary cards, renders charts and tables, and sends create, update, delete, or budget requests back to the API. CSV export follows a similar filtered database query and returns a downloadable file.
-
 ## Example Flow
 
 A new user opens the registration view and provides a username, email address, and password. After registration, the application creates an account and starts a session. The user chooses Add Expense, enters a title and amount in rupees, selects a category, and chooses an emoji-labelled subcategory that matches that category. On submission, the browser sends the expense fields to Flask. Flask validates the input, associates the row with the user's identifier, and stores it in SQLite. The refreshed dashboard then includes the expense in totals, charts, budget comparisons, the records table, and filtered CSV downloads.
+
+## 📺 Project Demo
+
+> 💡 **Want to see how it works?** 
+> Check out the step-by-step walkthrough in our [Demo Video (MP4)](assets/DEMO_PET_Project.mp4) or view the screenshots below!
+
+## 📸 Application Screenshots
+
+### 1. Signup & Login page
+Quick Signup to create a user and Login for later sessions.
+
+![Signup-page](assets/signup_page.png)
+![Login-page](assets/login_page.png)
+
+### 2. Add Expense
+![Expense](assets/add_expense.png)
+
+### 3. Dashboard View
+![Analysis](assets/analysis.png)
+![Records](assets/records.png)
+![Budget](assets/budget.png)
+![Categories](assets/categories.png)
 
 ## Findings
 
