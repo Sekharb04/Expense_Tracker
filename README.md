@@ -53,6 +53,10 @@ A new user opens the registration view and provides a username, email address, a
 
 > 💡 **Want to see how it works?** 
 > Check out the step-by-step walkthrough in our [Demo Video (MP4)](assets/DEMO_PET_Project.mp4) or view the screenshots below!
+> best parts:
+
+![Add Expense Demo](assets/demo_add_expense.mp4)
+![sqlite](assets/sqlite.mp4)
 
 ## 📸 Application Screenshots
 
